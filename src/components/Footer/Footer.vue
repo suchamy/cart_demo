@@ -18,7 +18,15 @@
 </template>
 
 <script>
-export default {}
+export default {
+  props:{
+  },
+  data(){
+    return {
+    }
+  },
+
+}
 </script>
 
 <style lang="less" scoped>

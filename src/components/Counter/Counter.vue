@@ -1,16 +1,40 @@
 <template>
   <div class="number-container d-flex justify-content-center align-items-center">
     <!-- 减 1 的按钮 -->
-    <button type="button" class="btn btn-light btn-sm">-</button>
+    <button type="button" class="btn btn-light btn-sm" @click="sub">-</button>
     <!-- 购买的数量 -->
-    <span class="number-box">1</span>
+    <span class="number-box">{{ count }}</span>
     <!-- 加 1 的按钮 -->
-    <button type="button" class="btn btn-light btn-sm">+</button>
+    <button type="button" class="btn btn-light btn-sm" @click="add">+</button>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  props:{
+    initCount:{
+      default:0,
+      type:Number
+    }
+  },
+  data(){
+    return {
+      count:this.initCount
+    }
+  },
+  methods:{
+    add(){
+      this.count += 1
+      this.$emit('countChange',this.count)
+    },
+    sub(){
+      if(this.count >= 1) {
+        this.count -= 1
+        this.$emit('countChange',this.count)
+      }
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>
