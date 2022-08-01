@@ -4,8 +4,8 @@
     <div class="thumb">
       <div class="custom-control custom-checkbox">
         <!-- 复选框 -->
-        <input type="checkbox" class="custom-control-input" id="cb1" :checked="state" />
-        <label class="custom-control-label" for="cb1">
+        <input type="checkbox" ref="ckBox" class="custom-control-input" :id="'cb'+id" :checked="state" @click="changeState"/>
+        <label class="custom-control-label" :for="'cb'+id">
           <!-- 商品的缩略图 -->
           <img :src="pic" alt="" />
         </label>
@@ -19,7 +19,7 @@
         <!-- 商品价格 -->
         <span class="goods-price">￥{{ price }}</span>
         <!-- 商品的数量 -->
-        <Counter></Counter>
+        <Counter :counter="count" :id="id"></Counter>
       </div>
     </div>
   </div>
@@ -29,32 +29,41 @@
 import Counter from '../Counter/Counter.vue'
 export default {
     props: {
-        title:{
-          default:'标题',
-          type: String
-        },
-        pic:{
-          default:'',
-          type: String
-        },
-        price:{
-          default:0,
-          type:Number
-        },
-        state:{
-          default:false,
-          type:Boolean
-        }
-    },
-    data() {
-        return {
-            
-        }
+      id:{
+        type:Number,
+        required:true
+      },
+      title:{
+        default:'标题',
+        type: String
+      },
+      pic:{
+        default:'',
+        type: String
+      },
+      price:{
+        default:0,
+        type:Number
+      },
+      state:{
+        default:false,
+        type:Boolean
+      },
+      count:{
+        default: 0,
+        type: Number
+      }
     },
     components: { Counter },
     methods:{
       getNewCount(val){
         this.goods.goods_count = val
+      },
+      changeState(){
+        this.$emit('state',{
+          id:this.id,
+          value:this.$refs.ckBox.checked
+      })
       }
     }
 }

@@ -3,34 +3,33 @@
     <!-- 减 1 的按钮 -->
     <button type="button" class="btn btn-light btn-sm" @click="sub">-</button>
     <!-- 购买的数量 -->
-    <span class="number-box">{{ count }}</span>
+    <span class="number-box">{{ counter }}</span>
     <!-- 加 1 的按钮 -->
     <button type="button" class="btn btn-light btn-sm" @click="add">+</button>
   </div>
 </template>
 
 <script>
+import bus from '@/components/eventBus.js'
+
 export default {
   props:{
-    initCount:{
-      default:0,
-      type:Number
-    }
+    id:{
+    type: Number,
+    required: true
   },
-  data(){
-    return {
-      count:this.initCount
+    counter:{
+      default: 0,
+      type: Number
     }
   },
   methods:{
     add(){
-      this.count += 1
-      this.$emit('countChange',this.count)
+      bus.$emit('addCount',{ id: this.id, value: this.counter + 1 })
     },
     sub(){
-      if(this.count >= 1) {
-        this.count -= 1
-        this.$emit('countChange',this.count)
+      if(this.counter >= 1) {
+        bus.$emit('subCount',{ id:this.id, value: this.counter - 1 })
       }
     }
   }
